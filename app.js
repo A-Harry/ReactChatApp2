@@ -1,37 +1,31 @@
 const express = require('express');
 const app = express(),
     PORT = process.env.PORT || 3000,
-    server = app.listen(PORT);
-const io = require("socket.io")(server);
+    server = app.listen(PORT),
+    apiRoutes = require("./routes/api"),
+    { db_url } = require("./config/db.config"),
+    mongoose = require("mongoose")
+    
+
+//after six hours this account will be deleted
+mongoose.connect(db_url,
+    { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("database Connected!")
+    }).catch((err) => {
+        console.log("Error occured. Connection to database failed")
+    })
 
 app.set("view engine", 'ejs');
+app.use(express.static("public"))
+app.use(apiRoutes);
 
-app.use(express.static('public'))
+//instantiate socketio and pass it in as an argument
+//for socketControl.js
+const io = require("socket.io")(server);
+require("./controllers/SocketControl")(io)
 
-app.get('/', (req, res) =>{
-    res.render('index')
-})
-
-server.on('listening', ()=>{
+server.on('listening', () => {
     console.log("server listening on port: " + PORT)
 })
 
-io.on('connection', (socket)=> {
-    console.log("new user connected");
-    socket.username = "anonymous"
-
-    socket.on('change_username', (data) =>{
-        socket.username = data.username
-        console.log(socket.username);
-    })
-
-    socket.on("new_message", (data) =>{
-        //broadcast the new message
-        io.sockets.emit('new_message', {username: data.username ? data.username 
-            : socket.username, message: data.message})
-    })
-
-    socket.on("typing", () =>{
-        io.sockets.emit("typing", {username: socket.username})
-    })
-})
