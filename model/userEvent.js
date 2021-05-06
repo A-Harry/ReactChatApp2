@@ -6,7 +6,7 @@ const userEventSchema = new Schema({
     user: String,
     room: String,
     message: String,
-});
+},{timestamps:{createdAt:true, updatedAt:false}});
 
 const userEvent = mongoose.model("userEvent", userEventSchema)
 module.exports= userEvent

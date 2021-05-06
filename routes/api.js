@@ -19,4 +19,26 @@ route.get("/api/eventLog", (req, res) => {
     })
 })
 
+route.get("/api/history", (req, res) =>{
+    userLog.find((err, docs) =>{
+        if(err) {
+            res.json("could not retrieve any documents")
+        }
+        else{
+            res.json(docs)
+        }
+    })
+})
+
+route.post("/api/roomhistory/:roomname", (req, res)=>{
+    userLog.where('room', req.params.roomname).exec((err, docs) =>{
+        if(err){
+            res.json("error retrieving documents");
+        }
+        else{
+            res.json(docs);
+        }
+    })
+})
+
 module.exports = route;
