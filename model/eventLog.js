@@ -7,9 +7,9 @@ const event = new Schema({
         enum: ["CONNECTION", "DISCONNECTION", "JOINED_ROOM", "LEAVE_ROOM"]
     },
     socket_id: String,
-    user: String,
+    username: String,
     description: String,
-}, {timestamps: true});
+}, {timestamps: {updatedAt:false}});
 
 const eventModel = mongoose.model("eventlogs", event);
 module.exports = eventModel;
