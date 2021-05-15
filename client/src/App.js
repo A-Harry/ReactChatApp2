@@ -1,25 +1,37 @@
 import logo from './logo.svg';
 import './App.css';
+import './'
+import Welcome from './components/ChatDisplay';
+import {io} from "socket.io-client"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from 'react'
+
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       
+    }
+  }
+  // using componentDidMount() to call io("localhost:4000") otherwise it would run
+  // the connection event twice
+  componentDidMount(){
+    this.socket = io("localhost:4000");
+  }
+
+  componentWillUnmount(){
+    this.socket.disconnect()
+    
+  }
+
+  render() {
+    return (
+      <div>
+      </div>
+    )
+  }
 }
 
-export default App;
+
+// export default App;
