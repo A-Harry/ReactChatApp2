@@ -25,26 +25,38 @@ module.exports = (io) =>{
             })
         })
 
-        //change rooms
+        // change rooms
         socket.on("change_room", (room)=>{
+            // ****** Leave previous room *******
             if(socket.room != room){
                 socket.leave(socket.room);
             }
-
-            io.to(room).emit("new_message", {
+            io.to(socket.room).emit("new_message", {
                 username: "SERVER:",
                 message: `${socket.username} has left the room`
-            })
-        })
+            });
+            // ****** Join new Room *******
+            socket.room = room
+            socket.join(socket.room);
+            socket.broadcast.emit("new_message", {
+                username: "SERVER:",
+                message: `${socket.username != "anonymous" ? socket.username : "new user"}
+                has joined the room`
+            });
+            socket.emit("update_self", ({
+                username: "SERVER:",
+                message: `You have joined the room: ${socket.room}`
+            }));
+        });
 
-        //on message event
+        // listen on new_message event
         socket.on("new_message", (data)=>{
             io.to(socket.room).emit("new_message", {
                 username:socket.username,
                 message: data.message
             })
         })
-        //disconnect
+        // listen on disconnect
         socket.on("disconnect", ()=>{
             console.log(`${socket.username} disconnected`)
         })
