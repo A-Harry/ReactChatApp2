@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import './'
-import Welcome from './components/ChatDisplay';
+import ChatDisplay from './components/ChatDisplay';
 import {io} from "socket.io-client"
 
 import React, { Component } from 'react'
@@ -17,7 +17,7 @@ export default class App extends Component {
   // using componentDidMount() to call io("localhost:4000") otherwise it would run
   // the connection event twice
   componentDidMount(){
-    this.socket = io("localhost:4000");
+
   }
 
   componentWillUnmount(){
@@ -28,6 +28,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        <ChatDisplay/>
       </div>
     )
   }

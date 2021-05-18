@@ -1,5 +1,6 @@
-moduele.exports = function(){
-
+const io = require("socket.io-client")
+export default function(){
+    const socket = io("localhost:4000");
     function changeRooms(room){
         socket.emit("change_room", (room));
     }
@@ -16,7 +17,7 @@ moduele.exports = function(){
         socket.on("update_self", callback)
     }
     function handleMessage(callback){
-        socket.on("new_message", callback)
+        return socket.on("new_message", callback)
     }
     return {
         changeRooms,
