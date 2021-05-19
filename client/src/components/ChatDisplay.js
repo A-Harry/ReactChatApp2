@@ -6,7 +6,7 @@ export default class ChatDisplay extends React.Component {
     
         this.state = {
             username: "anonymous",
-            messages: ["hay", "hey", "ay"],
+            messages: [],
             input:'',
             room: 'general'
         }
@@ -15,10 +15,15 @@ export default class ChatDisplay extends React.Component {
     componentDidMount(){
         // this.socket.join(this.state.room)
         this.socket = io("localhost:4000");
+        console.log(this.socket)
         this.socket.on("new_msg", msg =>{
             console.log("new message")
             this.onReceivedMessage(msg)
         })
+    }
+
+    componentWillUnmount(){
+        this.socket.disconnect()
     }
     onInput = (e)=>{
         this.setState({
@@ -34,7 +39,7 @@ export default class ChatDisplay extends React.Component {
     onReceivedMessage =(msg)=>{
         let arr = this.state.messages;
         this.setState({
-            messages: msg.message
+            messages: [...this.state.messages, msg]
         })
     }
     
@@ -42,11 +47,10 @@ export default class ChatDisplay extends React.Component {
         return (
         <div>
             <h1>ReactChat</h1>
-            <section className="chatbox">{this.state.messages.map((msg) =>{
-                return(
-                <p>{msg}</p>
-                )
-            })}
+            <section className="chatbox">
+                {this.state.messages.map((msg) =>{
+                    return<h1>{msg.username}: {msg.message}</h1>
+                })}
             </section>
             <form onSubmit={this.newMessage}>
                 <input className="inputTxt" onChange={this.onInput}></input>

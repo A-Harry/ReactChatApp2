@@ -21,7 +21,7 @@ export default class App extends Component {
   }
 
   componentWillUnmount(){
-    this.socket.disconnect()
+    // this.socket
     
   }
 
