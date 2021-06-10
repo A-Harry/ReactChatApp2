@@ -37,7 +37,7 @@ router.get("/api/history", (req, res)=> {
             console.log("retrieved chatLogs")
             res.json(docs)
         }
-    }).sort({createdAt: 'desc'})
+    })
 })
 
 router.post("/api/history/:roomname", (req, res)=>{
