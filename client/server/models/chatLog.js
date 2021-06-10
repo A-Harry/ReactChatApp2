@@ -6,6 +6,10 @@ let chatLogs = new Schema({
     username: String,
     room: String,
     message: String
+}, {
+    timestamps: {
+        updatedAt: false
+    }
 })
 
 module.exports = mongoose.model("chatLogs", chatLogs);

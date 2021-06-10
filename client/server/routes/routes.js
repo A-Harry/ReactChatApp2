@@ -6,6 +6,15 @@ const chatLog = require("../models/chatLog"),
 router.get("/", (req, res) =>{
     res.render("index")
 })
+router.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET, OPTIONS')
+        return res.status(200).json({});
+    }
+    next();
+})
 
 router.get("/api/eventLog", (req, res)=>{
     eventLog.find((err, docs) =>{
@@ -16,7 +25,7 @@ router.get("/api/eventLog", (req, res)=>{
             console.log("retrieved docs")
             res.json(docs)
         }
-    })
+    }).sort({createdAt: 'desc'})
 })
 
 router.get("/api/history", (req, res)=> {
@@ -28,7 +37,7 @@ router.get("/api/history", (req, res)=> {
             console.log("retrieved chatLogs")
             res.json(docs)
         }
-    })
+    }).sort({createdAt: 'desc'})
 })
 
 router.post("/api/history/:roomname", (req, res)=>{
