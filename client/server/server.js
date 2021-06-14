@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser');
 
 const express = require('express'),
     app = express(),
@@ -27,11 +28,9 @@ mongoose.connect(db_url,
         }
     })
 
-app.use(apiRoutes)
-app.get("/", (req, res) => {
-    console.log("server");
-    res.json("serve")
-})
+    // form data will be sent as application/x-www-form-urlencoded
+    app.use(express.urlencoded({extended: true}))
+    app.use(apiRoutes)
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
