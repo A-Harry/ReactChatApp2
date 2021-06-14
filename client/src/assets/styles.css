@@ -1,0 +1,14 @@
+table{
+    height:33px
+}
+
+div.eventLog, div.chatLog, div.Rooms{
+    height: 33vh;
+    overflow: auto;
+}
+
+table.log-data{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}

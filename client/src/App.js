@@ -2,9 +2,10 @@ import logo from './logo.svg';
 import './App.css';
 import './'
 import ChatDisplay from './components/ChatDisplay';
-import {io} from "socket.io-client"
-
+import {Login} from "./components/Login";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import React, { Component } from 'react'
+import AdminLogin from './components/admin/AdminLogin';
 
 export default class App extends Component {
   constructor(props) {
@@ -27,8 +28,20 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <ChatDisplay/>
+      <div className= "App">
+        <Router>
+          <Switch>
+            <Route exact path= "/" >
+              <Login/>
+            </Route>
+            <Route path="/chat">
+              <ChatDisplay/>
+            </Route>
+            <Route path="/adminlogin">
+              <AdminLogin/>
+            </Route>
+          </Switch>
+        </Router>
       </div>
     )
   }
