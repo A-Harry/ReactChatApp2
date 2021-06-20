@@ -33,7 +33,7 @@ module.exports = (io) =>{
                 });
             socket.username = data.username;
             socket.join(socket.room);
-            //      ------------ Update socket client of the change ------------- 
+            //      ------------ Update socket client of the name change ------------- 
             socket.emit("update_self", 
                 {
                     message: `You have joined ${socket.room} as ${socket.username}`

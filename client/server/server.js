@@ -8,7 +8,6 @@ const express = require('express'),
     io = require("socket.io")(server, {
         cors: {
             origin: "http://localhost:3000",
-            // method: ["GET", "POST"]
         }
     }),
     { db_url } = require('./config/db.config'),
@@ -28,14 +27,10 @@ mongoose.connect(db_url,
         }
     })
 
-    // form data will be sent as application/x-www-form-urlencoded
-    app.use(express.urlencoded({extended: true}))
+    // form data will be sent as application/json
+    app.use(express.json())
     app.use(apiRoutes)
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
-});
 
 // ******* SERVER LISTENING ON PORT **********************
 server.listen(PORT, () => {
