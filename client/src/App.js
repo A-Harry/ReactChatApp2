@@ -6,6 +6,7 @@ import {Login} from "./components/Login";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import React, { Component } from 'react'
 import AdminLogin from './components/admin/AdminLogin';
+import RoomAdd from './components/admin/RoomAdd'
 
 export default class App extends Component {
   constructor(props) {
@@ -39,6 +40,9 @@ export default class App extends Component {
             </Route>
             <Route path="/adminlogin">
               <AdminLogin/>
+            </Route>
+            <Route path="/room/add">
+              <RoomAdd/>
             </Route>
           </Switch>
         </Router>

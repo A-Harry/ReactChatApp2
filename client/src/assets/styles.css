@@ -12,3 +12,9 @@ table.log-data{
     justify-content: center;
     align-items: center;
 }
+
+.roomAddForm, .roomEditForm{
+    background: #00000091;
+    height:100vh;
+    position:fixed
+}
