@@ -135,15 +135,16 @@ router.post("/api/rooms/:id", (req, res) => {
 router.delete("/api/rooms/delete/:id", (req, res) => {
     let roomID = req.params.id
     console.log(roomID)
-    Room.deleteOne({ id: roomID }, (err) => {
+    Room.findOneAndDelete({ _id: roomID }, (err, doc) => {
         if (err) {
             console.log("error deleting the room")
             console.log(err)
             res.send(err)
         }
         else {
-            console.log("Room deleted")
-            res.send(`Room with ID: ${roomID} Deleted`)
+            console.log(`Room "${doc.name}" with ID: ${roomID} Deleted`)
+            console.log(doc)
+            res.send(`Room "${doc.name}" with ID: ${roomID} Deleted`)
         }
     })
 })

@@ -13,12 +13,13 @@ const Rooms = (props) => {
             props.onEdit(room._id)
         }
         if(e.target.value == "delete"){
-            props.onDelete(room._id)
+            props.handleDelete(room._id)
         }
     }
 
     return (
         <tr>
+            <td>{room._id}</td>
             <td>{room.name}</td>
             <td>{room.status}</td>
             <td>{moment(room.createdAt).format("MMMM DD YYYY hh:mm:ss a")}</td>
@@ -54,7 +55,7 @@ export default class RoomList extends Component {
         return (
             this.state.rooms.map((room) => {
                 return (
-                    <Rooms key={room._id} room={room} onEdit={this.onEdit} />
+                    <Rooms key={room._id} room={room} onEdit={this.onEdit} handleDelete={this.handleDelete}/>
                 )
             })
         )
@@ -72,23 +73,15 @@ export default class RoomList extends Component {
         })
     }
 
-    handleEdit(data){
-        const {roomID, roomName, status} = data
-        console.log(roomName, status, roomID)
-        const obj = {
-            roomID,
-            roomName,
-            status
+    handleDelete = async (id) =>{
+        var name;
+        await axios.get(`http://localhost:4000/api/rooms/${id}`).then((res)=>{
+            name = res.data.name
+            console.log(res.data)
+        })
+        if (window.confirm(`Are you sure you want to delete room: ${name}? \n( id: ${id})`)){
+            axios.delete(`http://localhost:4000/api/rooms/delete/${id}`)
         }
-        axios.post(`http://localhost:4000/api/rooms/${roomID}`, obj).then( res =>{
-            console.log(res)
-            const updateText = document.getElementById("update")
-            updateText.innerHTML = "Room Updated"
-            setTimeout(() => {
-                updateText.innerHTML = ""
-            }, 3000);
-
-        });
     }
 
     showAddform =() =>{
@@ -106,6 +99,7 @@ export default class RoomList extends Component {
                 <table id="tblRoom" className="log-data">
                     <thead>
                         <tr>
+                            <th>Room ID</th>
                             <th>Room Name</th>
                             <th>Status</th>
                             <th>Creation Date</th>
