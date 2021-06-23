@@ -13,6 +13,7 @@ class RoomAdd extends React.Component {
         this.handleStatus = this.handleStatus.bind(this);
         this.handleName = this.handleName.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.onClose = this.onClose.bind(this);
     }
 
      handleSubmit(e) {
@@ -38,10 +39,17 @@ class RoomAdd extends React.Component {
         })
     }
 
+    onClose(e){
+        e.preventDefault()
+        this.props.onClose(e.target.value)
+    }
+
     render() {
         return (
             <div>
                 <form className="roomAddForm" onSubmit={this.handleSubmit}>
+                <button value="addClose" onClick={this.onClose}>Close</button>
+                <br></br>
                     <label> Room Name: </label>
                     <input placeholder="enter a room name" onChange={this.handleName} required></input>
                     <label> Status </label>
@@ -51,6 +59,7 @@ class RoomAdd extends React.Component {
                     </select>
                     <button type="submit">Add room</button>
                 </form>
+                <p id="feedback"></p>
             </div>
         )
     }

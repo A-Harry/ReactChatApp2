@@ -13,7 +13,7 @@ const Rooms = (props) => {
             props.onEdit(room._id)
         }
         if(e.target.value == "delete"){
-            props.handleDelete(room._id)
+            props.onDelete(room._id)
         }
     }
 
@@ -36,8 +36,8 @@ export default class RoomList extends Component {
 
         this.state = {
             rooms: [],
-            edit: false,
-            add: false,
+            showEdit: false,
+            showAdd: false,
             selectedRoom:''
         }
     }
@@ -55,13 +55,13 @@ export default class RoomList extends Component {
         return (
             this.state.rooms.map((room) => {
                 return (
-                    <Rooms key={room._id} room={room} onEdit={this.onEdit} handleDelete={this.handleDelete}/>
+                    <Rooms key={room._id} room={room} onEdit={this.handleEdit} onDelete={this.handleDelete}/>
                 )
             })
         )
     }
 
-    onEdit = async (id) => {
+    handleEdit = async (id) => {
         var name;
         await axios.get(`http://localhost:4000/api/rooms/${id}`).then((res)=>{
             name = res.data
@@ -69,8 +69,11 @@ export default class RoomList extends Component {
         })
         this.setState({
             selectedRoom: name,
-            edit: !this.state.edit
+            showEdit: true
         })
+        if(this.state.showAdd){
+            this.handleClose("addClose")
+        }
     }
 
     handleDelete = async (id) =>{
@@ -86,12 +89,28 @@ export default class RoomList extends Component {
 
     showAddform =() =>{
         this.setState({
-            add: !this.state.add
+            showAdd: true
         })
+        if (this.state.showEdit){
+            this.handleClose("editClose")
+        }
+    }
+
+    handleClose = (val) =>{
+        if(val =="addClose"){
+            this.setState({
+                showAdd:false
+            })
+        }
+        else if(val == "editClose"){
+            this.setState({
+                showEdit: false
+            })
+        }
     }
 
     render() {
-        const {edit, add, selectedRoom} = this.state
+        const {showEdit, showAdd, selectedRoom} = this.state
         return (
             <div className="Rooms">
                 
@@ -111,8 +130,8 @@ export default class RoomList extends Component {
                         {this.displayRoomList()}
                     </tbody>
                 </table>
-                {edit && <RoomEdit room={selectedRoom}/>}
-                {add && <RoomAdd/>}
+                {showEdit && <RoomEdit room={selectedRoom} onClose={this.handleClose}/>}
+                {showAdd && <RoomAdd onClose={this.handleClose}/>}
             </div>
         )
     }
