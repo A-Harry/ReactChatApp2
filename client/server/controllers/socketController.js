@@ -18,6 +18,7 @@ module.exports = (io) =>{
         }).catch(err =>{
             console.log('error saving connection event document to Database')
         })
+
         // change username
         socket.on("change_username", (data)=>{
             //      ----------- Update Username in database ------------
@@ -36,10 +37,11 @@ module.exports = (io) =>{
             //      ------------ Update socket client of the name change ------------- 
             socket.emit("update_self", 
                 {
+                    username: "SERVER",
                     message: `You have joined ${socket.room} as ${socket.username}`
                 })
             
-            socket.broadcast.emit("new_message", 
+            socket.to(socket.room).emit("new_message", 
             {
                 username: "SERVER",
                 message: `${socket.username} joined the room` 
@@ -65,7 +67,7 @@ module.exports = (io) =>{
                 })
                 //      ------------ Send message to the previous Room --------------
                 io.to(socket.room).emit("new_message", {
-                    username: "SERVER:",
+                    username: "SERVER",
                     message: `${socket.username} has left the room`
                 });
                 //      ----------- Join new Room ------------
@@ -85,12 +87,12 @@ module.exports = (io) =>{
                 })
                 //      ---------- Send message to new Room -------------
                 socket.to(socket.room).emit("new_message", {
-                    username: "SERVER:",
+                    username: "SERVER",
                     message: `${socket.username != "anonymous" ? socket.username : "new user"}
                     has joined the room ${socket.room}`
                 });
                 socket.emit("update_self", ({
-                    username: "SERVER:",
+                    username: "SERVER",
                     message: `You have joined the room: ${socket.room}`
                 }));
             }
