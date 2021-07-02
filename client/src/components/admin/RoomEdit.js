@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Modal, Button } from "reactstrap";
 
 class RoomEdit extends React.Component {
     constructor(props) {
@@ -57,18 +58,20 @@ class RoomEdit extends React.Component {
         const { roomName, status } = this.state
         return (
             <div>
-                <form className="roomEditForm" onSubmit={this.handleSubmit}>
-                <button value="editClose" onClick={this.onClose}>Close</button>
-                <br></br>
-                    <label>Room Name:</label>
-                    <input placeholder="Enter Room name" value={roomName} onChange={this.handleName}></input>
-                    <select value={status} onChange={this.handleStatus}>
-                        <option>Active</option>
-                        <option>Inactive</option>
-                    </select>
-                    <button type="submit">Update room</button>
-                    <p id="feedback"></p>
-                </form>
+                <Modal isOpen="true">
+                    <form className="roomEditForm" onSubmit={this.handleSubmit}>
+                        <button value="editClose" onClick={this.onClose}>Close</button>
+                        <br></br>
+                        <label>Room Name:</label>
+                        <input placeholder="Enter Room name" value={roomName} onChange={this.handleName}></input>
+                        <select value={status} onChange={this.handleStatus}>
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                        <button type="submit">Update room</button>
+                        <p id="feedback"></p>
+                    </form>
+                </Modal>
             </div>
         )
     }

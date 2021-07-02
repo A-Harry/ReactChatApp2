@@ -47,21 +47,23 @@ export default class EventList extends Component {
         return (
             <div className="eventLog">
                 <h2>Event Logs</h2>
-                <table id="tblEventLog" className="log-data">
-                    <thead>
-                        <tr>
-                            <th>SocketID</th>
-                            <th>Type</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Username</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.getEventList()}
-                    </tbody>
-                </table>
+                <div className="tblContainer">
+                    <table id="tblEventLog" className="log-data">
+                        <thead>
+                            <tr>
+                                <th>SocketID</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Username</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.getEventList()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         )
     }

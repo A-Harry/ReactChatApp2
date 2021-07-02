@@ -9,10 +9,10 @@ const Rooms = (props) => {
 
    function handleClick(e){
         e.preventDefault()
-        if(e.target.value == "edit"){
+        if(e.target.value === "edit"){
             props.onEdit(room._id)
         }
-        if(e.target.value == "delete"){
+        if(e.target.value === "delete"){
             props.onDelete(room._id)
         }
     }
@@ -66,13 +66,15 @@ export default class RoomList extends Component {
         await axios.get(`http://localhost:4000/api/rooms/${id}`).then((res)=>{
             name = res.data
             console.log(res.data)
-        })
+        });
+
         this.setState({
             selectedRoom: name,
             showEdit: true
-        })
+        });
+
         if(this.state.showAdd){
-            this.handleClose("addClose")
+            this.handleClose("addClose");
         }
     }
 
@@ -94,15 +96,16 @@ export default class RoomList extends Component {
         if (this.state.showEdit){
             this.handleClose("editClose")
         }
+
     }
 
     handleClose = (val) =>{
-        if(val =="addClose"){
+        if(val === "addClose"){
             this.setState({
                 showAdd:false
             })
         }
-        else if(val == "editClose"){
+        else if(val === "editClose"){
             this.setState({
                 showEdit: false
             })
@@ -115,6 +118,7 @@ export default class RoomList extends Component {
             <div className="Rooms">
                 
                 <h2>Rooms</h2>
+                <div className="tblContainer">
                 <table id="tblRoom" className="log-data">
                     <thead>
                         <tr>
@@ -130,6 +134,7 @@ export default class RoomList extends Component {
                         {this.displayRoomList()}
                     </tbody>
                 </table>
+                </div>
                 {showEdit && <RoomEdit room={selectedRoom} onClose={this.handleClose}/>}
                 {showAdd && <RoomAdd onClose={this.handleClose}/>}
             </div>

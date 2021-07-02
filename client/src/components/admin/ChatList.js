@@ -47,21 +47,23 @@ export default class ChatList extends Component {
         return (
             <div className="chatLog">
                 <h2>Chat Logs</h2>
-                <table id="tblChatLog" className="log-data">
-                    <thead>
-                        <tr>
-                            <th>SocketID</th>
-                            <th>Username</th>
-                            <th>Room</th>
-                            <th>Message</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.getChatlogs()}
-                    </tbody>
-                </table>
+                <div className="tblContainer">
+                    <table id="tblChatLog" className="log-data">
+                        <thead>
+                            <tr>
+                                <th>SocketID</th>
+                                <th>Username</th>
+                                <th>Room</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.getChatlogs()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         )
     }
