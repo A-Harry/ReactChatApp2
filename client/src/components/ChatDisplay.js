@@ -1,19 +1,21 @@
 import React from "react"
 import io from "socket.io-client"
 import Rooms from "./Rooms.js"
+import axios from "axios"
+import "../assets/styles.css"
 export default class ChatDisplay extends React.Component {
     constructor(props) {
         super(props)
 
+        this.history = this.props.history;
+        this.location = this.props.location;
         this.state = {
-            username: "anonymous",
+            username: this.location.state ? this.location.state.username : "anonymous",
             messages: [],
             input: '',
             room: 'general',
-            rooms: [
-                "general", "movies", "school"
-            ],
-            chat: this.props.chat
+            rooms: [{name: 'general', status: "Active"}],
+            chat: this.location.state ? this.location.state.chat : "",
         }
     }
     
@@ -21,14 +23,15 @@ export default class ChatDisplay extends React.Component {
         // this.socket.join(this.state.room)
         this.socket = io("localhost:4000");
         console.log(this.socket)
-        if ((this.state.username != this.props.username) && (this.props.username != "")) {
-            await this.setState({
-                username: this.props.username
-            })
-            console.log(this.state.username)
-        }
 
-        if (this.state.username != "anonymous" ) {
+        // if ((this.state.username !== this.props.username) && (this.props.username !== "")) {
+        //     await this.setState({
+        //         username: this.props.username
+        //     })
+        //     console.log(this.state.username)
+        // }
+
+        if (this.state.username !== "anonymous" ) {
             this.socket.emit("change_username", { username: this.state.username })
         }
 
@@ -36,7 +39,15 @@ export default class ChatDisplay extends React.Component {
             console.log("new message")
             this.onReceivedMessage(msg)
         })
+        this.socket.on("update_self", (msg) =>{
+            this.onReceivedMessage(msg)
+        })
         
+        const roomlist = await axios.get("http://localhost:4000/api/rooms")
+        console.log(roomlist.data)
+        this.setState({
+            rooms: [...this.state.rooms.concat(roomlist.data)]
+        })
     }
 
     componentWillUnmount() {
@@ -57,14 +68,13 @@ export default class ChatDisplay extends React.Component {
 
     //when receiving message
     onReceivedMessage = (msg) => {
-        let arr = this.state.messages;
         this.setState({
             messages: [...this.state.messages, msg]
         })
     }
 
     onChangeRoom = (room) => {
-        if (this.state.room != room.target.value) {
+        if (this.state.room !== room.target.value) {
             this.socket.emit("change_room", room.target.value)
             this.setState({
                 room: room.target.value
@@ -73,9 +83,7 @@ export default class ChatDisplay extends React.Component {
     }
 
     returnHome = (e) =>{
-        this.setState({
-            chat:false
-        })
+        this.history.push("/")
         this.socket.disconnect()
     }
 
@@ -85,7 +93,7 @@ export default class ChatDisplay extends React.Component {
         rooms.forEach(element => {
             roomNames.push(element)
         });
-
+        
         return (
             <div>
                 <h1>ReactChat</h1>
@@ -93,7 +101,7 @@ export default class ChatDisplay extends React.Component {
                 <button id="home" onClick={this.returnHome}>Return to home </button>
                 <section className="chatbox">
                     {this.state.messages.map((msg) => {
-                        return <h1>{msg.username}: {msg.message}</h1>
+                        return <p>{msg.username}: {msg.message}</p>
                     })}
                 </section>
                 <form onSubmit={this.newMessage}>

@@ -12,7 +12,9 @@ export class Login extends React.Component {
             chatLogin: false,
             isAdmin: false
         }
+        this.history = this.props.history
     }
+
     showChat = () => {
         this.setState({
             chatLogin: !this.state.chatLogin
@@ -33,33 +35,36 @@ export class Login extends React.Component {
         })
     }
 
-    handleSubmit = (e) =>{
+    handleSubmit = (e) => {
         e.preventDefault()
-            this.setState({
-                chatLogin: !this.state.chatLogin
-            })
+        if (this.state.username != "") {
+            this.history.push("/chat", { chat: true, username: this.state.username })
+        }
+        else {
+            this.history.push("/chat", { chat: true, username: "anonymous" })
+        }
+    }
+
+    toggleChat = () => {
+        this.setState({
+            chatLogin: !this.state.chatLogin
+        })
     }
 
     render() {
         const { chatLogin, username, isAdmin } = this.state
         return (
             <div className="login-container">
-                {
-                    !chatLogin?
                 <div>
-                <Link to= "/adminlogin"><button> Admin Login </button></Link>
-                <form onSubmit={this.handleSubmit}>
-                    <button id="login-chat" type="submit">
-                        Chat Login
-                    </button>
-                    <input placeholder="Enter a username" onChange={this.handleUsername}></input>
-                </form>
+                    <Link to="/adminlogin"><button> Admin Login </button></Link>
+                    <form onSubmit={this.handleSubmit}>
+                        <button id="login-chat" type="submit">
+                            Chat Login
+                        </button>
+                        <input placeholder="Enter a username" value={this.state.username} onChange={this.handleUsername}></input>
+                    </form>
                 </div>
-                :
-                <ChatDisplay username={username}/>
-    }
             </div>
-            
         )
 
     }

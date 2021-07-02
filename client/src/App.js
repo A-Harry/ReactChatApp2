@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import "./assets/styles.css"
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './'
 import ChatDisplay from './components/ChatDisplay';
 import {Login} from "./components/Login";
@@ -7,6 +9,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import React, { Component } from 'react'
 import AdminLogin from './components/admin/AdminLogin';
 import RoomAdd from './components/admin/RoomAdd'
+import Admin from './components/admin/Admin';
 
 export default class App extends Component {
   constructor(props) {
@@ -32,15 +35,10 @@ export default class App extends Component {
       <div className= "App">
         <Router>
           <Switch>
-            <Route exact path= "/" >
-              <Login/>
-            </Route>
-            <Route path="/chat">
-              <ChatDisplay/>
-            </Route>
-            <Route path="/adminlogin">
-              <AdminLogin/>
-            </Route>
+            <Route exact path= "/" component={Login}/>
+            <Route path="/chat" component={ChatDisplay}/>
+            <Route path="/adminlogin" component={AdminLogin}/>
+            <Route path="/admin" component={Admin} />
             <Route path="/room/add">
               <RoomAdd/>
             </Route>
