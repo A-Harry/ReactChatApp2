@@ -1,20 +1,38 @@
-table{
-    height:33px
+html, body, input, textarea, select, button{
+    color: #e8e6e3 !important;
+    background-color: #131516 !important;
+}
+
+body{
+    background-color: #131516;
 }
 
 div.eventLog, div.chatLog, div.Rooms{
-    height: 33vh;
-    overflow: auto;
-}
-
-table.log-data{
-    display:flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .roomAddForm, .roomEditForm{
     background: #00000091;
     height:100vh;
-    position:fixed
+    position: absolute;
+}
+
+table.log-data{
+    width:100%
+}
+
+table.log-data td{
+    border-right-style: solid;
+    border-color: black;
+    border-right: 2px;
+}
+
+.tblContainer {
+    height: 33vh;
+    overflow: auto;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background: purple;
 }
