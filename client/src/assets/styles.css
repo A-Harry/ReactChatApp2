@@ -10,6 +10,7 @@ body{
 div.eventLog, div.chatLog, div.Rooms{
 }
 
+/* Admin Tables */
 .roomAddForm, .roomEditForm{
     background: #00000091;
     height:100vh;
@@ -29,10 +30,61 @@ table.log-data td{
 .tblContainer {
     height: 33vh;
     overflow: auto;
-}
+}    
 
 th {
     position: sticky;
     top: 0;
     background: purple;
+}
+
+/* ChatDisplay */
+div#roomList {
+    display:flex;
+    flex-direction: column;
+    width: 100%
+}    
+
+
+.roomContainer{
+    display: flex;
+    width:20%;
+    border-right: solid;
+    overflow: auto;
+    padding: 1rem;
+}    
+
+
+h2{
+    font-size:1.7rem;
+}
+
+.chatbox {
+    display:flex;
+    height: 70vh;
+    border: solid;
+}
+
+.chat{
+    margin-left: 1rem;
+    width:80%;
+}
+span.subHeading {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.5rem;
+    margin-left: 1rem;
+}
+
+label#current-room{
+    font-weight: 600;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+p#message{
+    font-size: 1.2rem;;
+    margin-top: 1rem;
+    margin-bottom: 0rem;
+    text-align: left;
 }

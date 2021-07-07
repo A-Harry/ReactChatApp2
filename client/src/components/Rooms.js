@@ -1,6 +1,7 @@
 export default function Rooms(props) {
     return (
-        <div>
+        <div id="roomList">
+            <h2>Rooms: </h2>
             {props.rooms.map((room) => {
                 if (room.status === "Active") {
                     return (

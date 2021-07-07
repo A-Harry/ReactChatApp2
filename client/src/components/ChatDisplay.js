@@ -2,6 +2,7 @@ import React from "react"
 import io from "socket.io-client"
 import Rooms from "./Rooms.js"
 import axios from "axios"
+import { Container, Form, FormGroup } from "reactstrap"
 import "../assets/styles.css"
 export default class ChatDisplay extends React.Component {
     constructor(props) {
@@ -93,21 +94,34 @@ export default class ChatDisplay extends React.Component {
         rooms.forEach(element => {
             roomNames.push(element)
         });
+
+        const currentRoom = this.state.room;
         
         return (
             <div>
+                <Container >
                 <h1>ReactChat</h1>
-                <Rooms rooms={roomNames} onChangeRoom={this.onChangeRoom} />
-                <button id="home" onClick={this.returnHome}>Return to home </button>
-                <section className="chatbox">
-                    {this.state.messages.map((msg) => {
-                        return <p>{msg.username}: {msg.message}</p>
-                    })}
-                </section>
-                <form onSubmit={this.newMessage}>
-                    <input className="inputTxt" onChange={this.onInput}></input>
-                    <button type="submit">Send</button>
-                </form>
+                <span className="subHeading">
+                    <label id="current-room">Current Room: {currentRoom} </label>
+                    <button id="home" onClick={this.returnHome}>Return to home </button>
+                </span>
+                </Container>
+                <Container className= "chat-container" fluid="lg">
+                    <section className="chatbox">
+                        <section className="roomContainer">
+                            <Rooms rooms={roomNames} onChangeRoom={this.onChangeRoom} />
+                        </section>
+                        <section className="chat">
+                            {this.state.messages.map((msg) => {
+                                return <p id="message">{msg.username}: {msg.message}</p>
+                            })}
+                        </section>
+                    </section>
+                    <form onSubmit={this.newMessage}>
+                        <input className="inputTxt" onChange={this.onInput}></input>
+                        <button type="submit">Send</button>
+                    </form>
+                </Container>
             </div>
         )
     }
