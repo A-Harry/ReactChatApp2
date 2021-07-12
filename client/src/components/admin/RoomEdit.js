@@ -58,17 +58,18 @@ class RoomEdit extends React.Component {
         const { roomName, status } = this.state
         return (
             <div>
-                <Modal isOpen="true">
+                <Modal isOpen={true}>
                     <form className="roomEditForm" onSubmit={this.handleSubmit}>
-                        <button value="editClose" onClick={this.onClose}>Close</button>
-                        <br></br>
-                        <label>Room Name:</label>
-                        <input placeholder="Enter Room name" value={roomName} onChange={this.handleName}></input>
-                        <select value={status} onChange={this.handleStatus}>
+                        <button class="btnClose" value="editClose" onClick={this.onClose}>Close</button>
+                        <label id="lblEdit">Edit Room</label>
+                        <label id="lblRoom">Room Name:</label>
+                        <input id="inpRoom" placeholder="Enter Room name" value={roomName} onChange={this.handleName}></input>
+                        <label id="lblStatus">Status:</label>
+                        <select id="optStatus" value={status} onChange={this.handleStatus}>
                             <option>Active</option>
                             <option>Inactive</option>
                         </select>
-                        <button type="submit">Update room</button>
+                        <button id="btnUpdate" type="submit">Update room</button>
                         <p id="feedback"></p>
                     </form>
                 </Modal>

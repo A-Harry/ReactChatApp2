@@ -1,5 +1,6 @@
 import React from "react"
 import axios from "axios"
+import { Modal } from "reactstrap"
 
 class RoomAdd extends React.Component {
     constructor(props) {
@@ -22,7 +23,14 @@ class RoomAdd extends React.Component {
             name: this.state.roomName,
             status: this.state.status
         }
-        axios.post("http://localhost:4000/api/rooms/add", obj)
+        const feedback = document.getElementById("feedback")
+        axios.post("http://localhost:4000/api/rooms/add", obj).then((res)=>{
+            console.log(res);
+            feedback.innerHTML=res.data
+            setTimeout(() => {
+                feedback.innerHTML= ""
+            }, 3000)
+        })
     }
 
     handleName(e) {
@@ -47,19 +55,21 @@ class RoomAdd extends React.Component {
     render() {
         return (
             <div>
-                <form className="roomAddForm" onSubmit={this.handleSubmit}>
-                    <button value="addClose" onClick={this.onClose}>Close</button>
-                    <br></br>
-                    <label> Room Name: </label>
-                    <input placeholder="enter a room name" onChange={this.handleName} required></input>
-                    <label> Status </label>
-                    <select onChange={this.handleStatus}>
-                        <option> Active </option>
-                        <option> Inactive </option>
-                    </select>
-                    <button type="submit">Add room</button>
-                </form>
-                <p id="feedback"></p>
+                <Modal isOpen={true}>
+                    <form className="roomAddForm" onSubmit={this.handleSubmit}>
+                        <button className="btnClose" value="addClose" onClick={this.onClose}>Close</button>
+                        <label id="lblAdd">Add a room</label>
+                        <label id="lblRoom"> Room Name: </label>
+                        <input id="inpRoom" placeholder="enter a room name" onChange={this.handleName} required></input>
+                        <label id="lblStatus"> Status: </label>
+                        <select id="optStatus" onChange={this.handleStatus}>
+                            <option> Active </option>
+                            <option> Inactive </option>
+                        </select>
+                        <button id="btnAdd" type="submit">Add room</button>
+                        <p id="feedback"></p>
+                    </form>
+                </Modal>
             </div>
         )
     }

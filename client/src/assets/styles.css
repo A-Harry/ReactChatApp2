@@ -8,13 +8,39 @@ body{
 }
 
 div.eventLog, div.chatLog, div.Rooms{
+    margin-top: 1rem;
 }
 
 /* Admin Tables */
 .roomAddForm, .roomEditForm{
-    background: #00000091;
-    height:100vh;
-    position: absolute;
+    background: #000000d0;
+    display:grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1.5fr 1fr 1fr 1.5fr;
+    row-gap: 1rem;
+    column-gap: 1rem;
+    text-align: right;
+    /* height:100vh;
+    position: absolute; */
+}
+
+.roomEditForm{
+    grid-template-areas:
+        ". . btnClose"
+        ". . ."
+        "lblRoom inpRoom . "
+        "lblStatus optStatus ."
+        "btnUpdate btnUpdate btnUpdate"
+        "feedback feedback feedback";
+}
+.roomAddForm{
+    grid-template-areas:
+    ". . btnClose"
+    "lblAdd lblAdd lblAdd"
+    "lblRoom inpRoom ."
+    "lblStatus optStatus ."
+    "btnAdd btnAdd btnAdd"
+    "feedback feedback feedback"
 }
 
 table.log-data{
@@ -22,20 +48,76 @@ table.log-data{
 }
 
 table.log-data td{
-    border-right-style: solid;
-    border-color: black;
-    border-right: 2px;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem
 }
 
 .tblContainer {
     height: 33vh;
     overflow: auto;
+    width: 95%;
+    border-style:solid;
+    border-color:purple;
+    margin: auto;
 }    
 
 th {
     position: sticky;
     top: 0;
     background: purple;
+    padding: 0.5rem;
+}
+
+tr{
+    border-style: none !important; /*to counter the reboot.scss*/
+    border-bottom: solid !important;
+    border-width: 2px !important;
+    border-color: #ffffff50 !important;
+}
+
+button.btnClose {
+    justify-self: right;
+    grid-area: btnClose;
+}
+
+button#btnUpdate{
+    grid-area: btnUpdate;
+}
+
+button#btnAdd{
+    grid-area: btnAdd;
+}
+
+label#lblEdit{
+    grid-area: 2/1/2/-1; /* row start: 2, col-start: 1, row-end:2, col-end: -1(last) */
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+}
+label#lblAdd{
+    grid-area:lblAdd;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+label#lblRoom{
+    grid-area: lblRoom;
+}
+
+label#lblStatus{
+    grid-area: lblStatus;
+}
+input#inpRoom{
+    grid-area: inpRoom;
+}
+select#optStatus{
+    grid-area: optStatus;
+}
+
+p#feedback{
+    grid-area: feedback;
+    margin: 0.5rem auto
 }
 
 /* ChatDisplay */
@@ -87,4 +169,22 @@ p#message{
     margin-top: 1rem;
     margin-bottom: 0rem;
     text-align: left;
+}
+
+/* Form (ChatDisplay) */
+input.inputTxt.form-control {
+    width: 95%;
+}
+
+form.userform {
+    display: flex;
+}
+
+button.btn.btn-secondary {
+    font-weight: 600;
+    padding: 1rem;
+}
+
+button.btn.btn-secondary:hover {
+    background-color: #175692 !important;
 }

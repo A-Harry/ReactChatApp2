@@ -4,6 +4,7 @@ import RoomAdd from "./RoomAdd";
 import RoomEdit from "./RoomEdit";
 import moment from "moment";
 
+
 const Rooms = (props) => {
     const room = props.room
 
@@ -127,7 +128,8 @@ export default class RoomList extends Component {
                             <th>Status</th>
                             <th>Creation Date</th>
                             <th>Last Edit Date</th>
-                            <button onClick={this.showAddform}>Add Room</button>
+                            <th><button onClick={this.showAddform}>Add Room</button></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

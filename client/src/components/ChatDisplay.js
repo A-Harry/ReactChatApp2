@@ -2,7 +2,7 @@ import React from "react"
 import io from "socket.io-client"
 import Rooms from "./Rooms.js"
 import axios from "axios"
-import { Container, Form, FormGroup } from "reactstrap"
+import { Container, Form, FormGroup, Input, Button } from "reactstrap"
 import "../assets/styles.css"
 export default class ChatDisplay extends React.Component {
     constructor(props) {
@@ -15,16 +15,16 @@ export default class ChatDisplay extends React.Component {
             messages: [],
             input: '',
             room: 'general',
-            rooms: [{name: 'general', status: "Active"}],
+            rooms: [{ name: 'general', status: "Active" }],
             chat: this.location.state ? this.location.state.chat : "",
         }
     }
-    
+
     async componentDidMount() {
         // this.socket.join(this.state.room)
         this.socket = io("localhost:4000");
         console.log(this.socket)
-
+        this.txtInput = document.getElementsByClassName("inputTxt")
         // if ((this.state.username !== this.props.username) && (this.props.username !== "")) {
         //     await this.setState({
         //         username: this.props.username
@@ -32,7 +32,7 @@ export default class ChatDisplay extends React.Component {
         //     console.log(this.state.username)
         // }
 
-        if (this.state.username !== "anonymous" ) {
+        if (this.state.username !== "anonymous") {
             this.socket.emit("change_username", { username: this.state.username })
         }
 
@@ -40,10 +40,10 @@ export default class ChatDisplay extends React.Component {
             console.log("new message")
             this.onReceivedMessage(msg)
         })
-        this.socket.on("update_self", (msg) =>{
+        this.socket.on("update_self", (msg) => {
             this.onReceivedMessage(msg)
         })
-        
+
         const roomlist = await axios.get("http://localhost:4000/api/rooms")
         console.log(roomlist.data)
         this.setState({
@@ -64,7 +64,13 @@ export default class ChatDisplay extends React.Component {
     //send message to server
     newMessage = (event) => {
         event.preventDefault();
-        this.socket.emit("new_message", { username: this.state.username, message: this.state.input })
+        if (this.state.input !== '') {
+            this.socket.emit("new_message", { username: this.state.username, message: this.state.input })
+            this.setState({
+                input: ''
+            })
+            this.txtInput[0].value = ""
+        }
     }
 
     //when receiving message
@@ -83,7 +89,7 @@ export default class ChatDisplay extends React.Component {
         }
     }
 
-    returnHome = (e) =>{
+    returnHome = (e) => {
         this.history.push("/")
         this.socket.disconnect()
     }
@@ -96,17 +102,17 @@ export default class ChatDisplay extends React.Component {
         });
 
         const currentRoom = this.state.room;
-        
+
         return (
             <div>
                 <Container >
-                <h1>ReactChat</h1>
-                <span className="subHeading">
-                    <label id="current-room">Current Room: {currentRoom} </label>
-                    <button id="home" onClick={this.returnHome}>Return to home </button>
-                </span>
+                    <h1>ReactChat</h1>
+                    <span className="subHeading">
+                        <label id="current-room">Current Room: {currentRoom} </label>
+                        <button id="home" onClick={this.returnHome}>Return to home </button>
+                    </span>
                 </Container>
-                <Container className= "chat-container" fluid="lg">
+                <Container className="chat-container" fluid="lg">
                     <section className="chatbox">
                         <section className="roomContainer">
                             <Rooms rooms={roomNames} onChangeRoom={this.onChangeRoom} />
@@ -117,9 +123,9 @@ export default class ChatDisplay extends React.Component {
                             })}
                         </section>
                     </section>
-                    <form onSubmit={this.newMessage}>
-                        <input className="inputTxt" onChange={this.onInput}></input>
-                        <button type="submit">Send</button>
+                    <form className="userform" onSubmit={this.newMessage}>
+                        <Input className="inputTxt" placeholder="Type a message" onChange={this.onInput}></Input>
+                        <Button type="submit">Send</Button>
                     </form>
                 </Container>
             </div>
