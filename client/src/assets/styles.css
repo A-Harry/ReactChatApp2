@@ -148,8 +148,15 @@ h2{
 }
 
 .chat{
-    margin-left: 1rem;
+    /* margin-left: 1rem; */
     width:80%;
+    overflow-y: auto;
+}
+p#numUsers {
+    position: sticky;
+    top: 0;
+    font-size: 1.1rem;
+    background-color: #060808;
 }
 span.subHeading {
     display: flex;
@@ -169,6 +176,7 @@ p#message{
     margin-top: 1rem;
     margin-bottom: 0rem;
     text-align: left;
+    margin-left: 1rem;
 }
 
 /* Form (ChatDisplay) */

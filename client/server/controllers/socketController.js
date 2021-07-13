@@ -1,5 +1,6 @@
 const EventLog = require("../models/eventLog");
 const ChatLog = require("../models/chatLog")
+const user = require("./userUtil")
 
 module.exports = (io) =>{
     io.on('connection', (socket) =>{
@@ -7,6 +8,9 @@ module.exports = (io) =>{
         socket.room = "general"
         console.log("user connected");
         socket.join(socket.room);
+        user.joinRoom(socket.room);
+        
+
         //      ---------- New Document for Connection Event -------------
         let eventDoc = new EventLog({
             event: "CONNECTION", socket_id: socket.id,
@@ -18,7 +22,7 @@ module.exports = (io) =>{
         }).catch(err =>{
             console.log('error saving connection event document to Database')
         })
-
+        
         // change username
         socket.on("change_username", (data)=>{
             //      ----------- Update Username in database ------------
@@ -38,22 +42,25 @@ module.exports = (io) =>{
             socket.emit("update_self", 
                 {
                     username: "SERVER",
-                    message: `You have joined ${socket.room} as ${socket.username}`
+                    message: `You have joined ${socket.room} as ${socket.username}`,
+                    participants: user.participants
                 })
             
             socket.to(socket.room).emit("new_message", 
             {
                 username: "SERVER",
-                message: `${socket.username} joined the room` 
+                message: `${socket.username} joined the room`, 
+                participants: user.participants
             })
         })
 
         // change rooms
         socket.on("change_room", (room)=>{
-            console.log("change_room event triggered")
             //      --------- Leave previous room ---------
             if(socket.room != room){
                 socket.leave(socket.room);
+                user.leaveRoom(socket.room)
+
                 let event = new EventLog({
                     event: "LEAVE_ROOM", socket_id: socket.id,
                     username: socket.username, description: `${socket.username} left room: ${socket.room}`
@@ -65,14 +72,19 @@ module.exports = (io) =>{
                     console.log("error saving 'leave' event")
                     console.log(err)
                 })
+
                 //      ------------ Send message to the previous Room --------------
                 io.to(socket.room).emit("new_message", {
                     username: "SERVER",
-                    message: `${socket.username} has left the room`
+                    message: `${socket.username} has left the room`,
+                    participants: user.participants
                 });
+
                 //      ----------- Join new Room ------------
                 socket.room = room
                 socket.join(socket.room);
+                user.joinRoom(socket.room);
+
                 //      ----------- New Join Event saved ------------
                 event = new EventLog({
                     event:"JOIN_ROOM", socket_id: socket.id,
@@ -85,15 +97,18 @@ module.exports = (io) =>{
                     console.log("error saving 'join' event");
                     console.log(err);
                 })
+
                 //      ---------- Send message to new Room -------------
                 socket.to(socket.room).emit("new_message", {
                     username: "SERVER",
                     message: `${socket.username != "anonymous" ? socket.username : "new user"}
-                    has joined the room ${socket.room}`
+                    has joined the room ${socket.room}`,
+                    participants: user.participants
                 });
                 socket.emit("update_self", ({
                     username: "SERVER",
-                    message: `You have joined the room: ${socket.room}`
+                    message: `You have joined the room: ${socket.room}`,
+                    participants: user.participants
                 }));
             }
         });
@@ -104,6 +119,7 @@ module.exports = (io) =>{
                 username:socket.username,
                 message: data.message
             })
+
             //      ----------- Save message event ----------------
             let event = new ChatLog({
                 socket_id: socket.id, username: socket.username,
@@ -116,22 +132,31 @@ module.exports = (io) =>{
                 console.log("error saving message event");
                 console.log(err)
             })
-            // console.log({message:data.message, username: data.username, socket: socket.username})
         })
+
         //  ---------- listen on disconnect -----------
         socket.on("disconnect", ()=>{
             console.log(`${socket.username} disconnected`)
+            user.leaveRoom(socket.room)
+
             let event = new EventLog({
                 event: "DISCONNECTION", socket_id: socket.id,
-                username: socket.username, description: `${socket.username} has disconnected
-                from the server`
+                username: socket.username, 
+                description: `${socket.username} has disconnected from the server`
             })
+
             event.save().then(result =>{
                 console.log("Disconnection event saved")
                 console.log(result)
             }).catch(err =>{
                 console.log("Error while saving Disconnection event")
                 console.log(err)
+            })
+
+            io.to(socket.room).emit("new_message", {
+                participants: user.participants,
+                username: "SERVER",
+                message: `${socket.username} has disconnected`
             })
         })
     })

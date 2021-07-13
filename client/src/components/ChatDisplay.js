@@ -4,6 +4,7 @@ import Rooms from "./Rooms.js"
 import axios from "axios"
 import { Container, Form, FormGroup, Input, Button } from "reactstrap"
 import "../assets/styles.css"
+// import {participants} from "../../server/controllers/socketController"
 export default class ChatDisplay extends React.Component {
     constructor(props) {
         super(props)
@@ -17,6 +18,7 @@ export default class ChatDisplay extends React.Component {
             room: 'general',
             rooms: [{ name: 'general', status: "Active" }],
             chat: this.location.state ? this.location.state.chat : "",
+            users: ''
         }
     }
 
@@ -78,6 +80,11 @@ export default class ChatDisplay extends React.Component {
         this.setState({
             messages: [...this.state.messages, msg]
         })
+        if(msg.participants){
+            this.setState({
+                users: msg.participants
+            })
+        }
     }
 
     onChangeRoom = (room) => {
@@ -96,6 +103,7 @@ export default class ChatDisplay extends React.Component {
 
     render() {
         const { rooms } = this.state
+        const { users } = this.state
         let roomNames = []
         rooms.forEach(element => {
             roomNames.push(element)
@@ -118,6 +126,7 @@ export default class ChatDisplay extends React.Component {
                             <Rooms rooms={roomNames} onChangeRoom={this.onChangeRoom} />
                         </section>
                         <section className="chat">
+                            <p id="numUsers">{users[currentRoom]} participants in the room</p>
                             {this.state.messages.map((msg) => {
                                 return <p id="message">{msg.username}: {msg.message}</p>
                             })}
