@@ -117,7 +117,7 @@ export default class ChatDisplay extends React.Component {
                     <h1>ReactChat</h1>
                     <span className="subHeading">
                         <label id="current-room">Current Room: {currentRoom} </label>
-                        <button id="home" onClick={this.returnHome}>Return to home </button>
+                        <Button id="btnHome" onClick={this.returnHome}>Return to home </Button>
                     </span>
                 </Container>
                 <Container className="chat-container" fluid="lg">

@@ -218,7 +218,7 @@ p#feedback{
     font-weight: 500;
 }
 
-/* ChatDisplay */
+/************* ChatDisplay ****************/
 div#roomList {
     display:flex;
     flex-direction: column;
@@ -261,6 +261,11 @@ span.subHeading {
     justify-content: space-between;
     padding-bottom: 0.5rem;
     margin-left: 1rem;
+    align-items: center;
+}
+
+button#btnHome{
+    padding:0.7rem;
 }
 
 label#current-room{
