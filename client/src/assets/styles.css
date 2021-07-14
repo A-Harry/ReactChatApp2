@@ -7,6 +7,7 @@ body{
     background-color: #131516;
 }
 
+/************* Admin login Screen **********/
 .admin-login{
     display: flex;
     height: 100vh;
@@ -46,6 +47,8 @@ input.txtAdmin-form{
 button#btn-admin-submit{
     margin:1rem
 }
+
+/************** Chat Login Page *****************/
 
 .chat-login {
     display: flex;
@@ -95,14 +98,20 @@ input#txtUsername{
 }
 
 /***************** Admin Tables ****************/
-#btnLogout{
-    background-color: #7C212A !important;
-    font-weight: 500;
+th {
+    position: sticky;
+    top: 0;
+    background: purple;
+    padding: 0.5rem;
 }
-button#btnAdd {
-    top: 25%;
-    position: relative;
+
+tr{
+    border-style: none !important; /*to counter the reboot.scss*/
+    border-bottom: solid !important;
+    border-width: 2px !important;
+    border-color: #ffffff50 !important;
 }
+
 
 div.eventLog, div.chatLog, div.Rooms{
     margin-top: 1rem;
@@ -157,18 +166,14 @@ table.log-data td{
     margin: auto;
 }    
 
-th {
-    position: sticky;
-    top: 0;
-    background: purple;
-    padding: 0.5rem;
+button#btnLogout{
+    background-color: #7C212A !important;
+    font-weight: 500;
 }
 
-tr{
-    border-style: none !important; /*to counter the reboot.scss*/
-    border-bottom: solid !important;
-    border-width: 2px !important;
-    border-color: #ffffff50 !important;
+button#btnAdd {
+    top: 25%;
+    position: relative;
 }
 
 button.btnClose {
@@ -190,6 +195,7 @@ label#lblEdit{
     font-size: 2rem;
     font-weight: 500;
 }
+
 label#lblAdd{
     grid-area:lblAdd;
     text-align: center;
@@ -204,9 +210,11 @@ label#lblRoom{
 label#lblStatus{
     grid-area: lblStatus;
 }
+
 input#inpRoom{
     grid-area: inpRoom;
 }
+
 select#optStatus{
     grid-area: optStatus;
 }
@@ -250,12 +258,7 @@ h2{
     width:80%;
     overflow-y: auto;
 }
-p#numUsers {
-    position: sticky;
-    top: 0;
-    font-size: 1.1rem;
-    background-color: #060808;
-}
+
 span.subHeading {
     display: flex;
     justify-content: space-between;
@@ -264,14 +267,19 @@ span.subHeading {
     align-items: center;
 }
 
-button#btnHome{
-    padding:0.7rem;
-}
+
 
 label#current-room{
     font-weight: 600;
     font-style: italic;
     font-size: 1.2rem;
+}
+
+p#numUsers {
+    position: sticky;
+    top: 0;
+    font-size: 1.1rem;
+    background-color: #060808;
 }
 
 p#message{
@@ -289,6 +297,10 @@ input.inputTxt.form-control {
 
 form.userform {
     display: flex;
+}
+
+button#btnHome{
+    padding:0.7rem;
 }
 
 button.btn.btn-secondary {
