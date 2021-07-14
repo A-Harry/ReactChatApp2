@@ -2,6 +2,7 @@ import ChatDisplay from "./ChatDisplay";
 import AdminLogin from "./admin/AdminLogin"
 import React from "react"
 import { Link, Redirect } from "react-router-dom";
+import {Container, Input, Button, Form as form} from "reactstrap"
 // Login Screen -> ChatDisplay
 export class Login extends React.Component {
     constructor(props) {
@@ -54,16 +55,17 @@ export class Login extends React.Component {
     render() {
         const { chatLogin, username, isAdmin } = this.state
         return (
-            <div className="login-container">
-                <div>
-                    <Link to="/adminlogin"><button> Admin Login </button></Link>
-                    <form onSubmit={this.handleSubmit}>
-                        <button id="login-chat" type="submit">
+            <div className="chat-login">
+                <Container className="login-container">
+                    <Link to="/adminlogin"><Button id="btnAdmin"> Admin Login </Button></Link>
+                    <h1 id="lblHome">React Chat</h1>
+                    <form className="login-form" onSubmit={this.handleSubmit}>
+                        <Input id="txtUsername" placeholder="Enter a username" value={this.state.username} onChange={this.handleUsername}></Input>
+                        <Button id="login-chat" type="submit">
                             Chat Login
-                        </button>
-                        <input placeholder="Enter a username" value={this.state.username} onChange={this.handleUsername}></input>
+                        </Button>
                     </form>
-                </div>
+                </Container>
             </div>
         )
 

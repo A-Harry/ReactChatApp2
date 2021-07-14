@@ -2,6 +2,7 @@ import React from "react";
 import Admin from "./Admin";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import {Container, Input, Button} from "reactstrap";
 
 export default class AdminLogin extends React.Component {
     constructor(props) {
@@ -33,9 +34,9 @@ export default class AdminLogin extends React.Component {
         const feedback = document.getElementById("feedback")
         if (this.state.username !== username && this.state.password !== password) {
             feedback.innerHTML = "Wrong credentials"
-            setTimeout(() => {
-                feedback.innerHTML = ""
-            }, 3000)
+            // setTimeout(() => {
+            //     feedback.innerHTML = ""
+            // }, 3000)
         }
         else {
             this.props.history.replace("/admin", { access: true })
@@ -56,16 +57,18 @@ export default class AdminLogin extends React.Component {
         const { access } = this.state;
         return (
             <div className="admin-login">
-                <div>
-                    <button onClick={this.returnHome}>Return to Home</button>
-                    <label>Admin Login</label>
-                    <form className="admin-login" onSubmit={this.handleSubmit}>
-                        <input id="username" type="text" placeholder="username" onChange={this.handleChange}></input>
-                        <input id="password" type="password" placeholder="password" onChange={this.handleChange}></input>
-                        <button id="admin-submit" type="submit">Login</button>
+                <Container className="admin-container">
+                    <Button onClick={this.returnHome}>Return to Home</Button>
+                    <h1>Admin Login</h1>
+                    <form className="admin-form" onSubmit={this.handleSubmit}>
+                        <label className="lblAdmin">Username:</label>
+                        <Input className="txtAdmin-form" id="username" type="text" placeholder="username" onChange={this.handleChange}></Input>
+                        <label className="lblAdmin">Password:</label>
+                        <Input className="txtAdmin-form" id="password" type="password" placeholder="password" onChange={this.handleChange}></Input>
+                        <Button id="btn-admin-submit" type="submit">Login</Button>
                     </form>
                     <p id="feedback"></p>
-                </div>
+                </Container>
             </div>
         )
     }

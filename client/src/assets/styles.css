@@ -7,11 +7,107 @@ body{
     background-color: #131516;
 }
 
+.admin-login{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, hsla(212, 58%, 10%, 1) 20%, hsla(267, 61%, 10%, 1) 70%);
+}
+
+.admin-container.container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    height: 80%;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+}
+
+.admin-form{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width:60%;
+    height:55%;
+}
+
+label.lblAdmin {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+input.txtAdmin-form{
+    height:20%
+}
+
+button#btn-admin-submit{
+    margin:1rem
+}
+
+.chat-login {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, hsla(0, 0%, 31%, 1) 4%, hsla(213, 61%, 10%, 1) 56%);
+    /* margin: auto; */
+}
+
+.login-container.container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    height: 60%;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    background: hsla(216, 4%, 28%, 1); /* fall back for older browsers */
+    background: linear-gradient(315deg, hsla(216, 4%, 28%, 1) 0%, hsla(212, 58%, 10%, 1) 15%, hsla(213, 61%, 10%, 1) 85%, hsla(0, 0%, 31%, 1) 100%);
+    background: -moz-linear-gradient(315deg, hsla(216, 4%, 28%, 1) 0%, hsla(212, 58%, 10%, 1) 15%, hsla(213, 61%, 10%, 1) 85%, hsla(0, 0%, 31%, 1) 100%);    
+    background: -webkit-linear-gradient(315deg, hsla(216, 4%, 28%, 1) 0%, hsla(212, 58%, 10%, 1) 15%, hsla(213, 61%, 10%, 1) 85%, hsla(0, 0%, 31%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#444649", endColorstr="#0B1929", GradientType=1 );
+}
+
+form.login-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 10%;
+}
+
+button#btnAdmin{
+    position: relative;
+    top: 0;
+}
+
+h1#lblHome{
+    position: relative;
+    bottom: 5%
+}
+
+input#txtUsername{
+    width:60%;
+}
+
+/***************** Admin Tables ****************/
+#btnLogout{
+    background-color: #7C212A !important;
+    font-weight: 500;
+}
+button#btnAdd {
+    top: 25%;
+    position: relative;
+}
+
 div.eventLog, div.chatLog, div.Rooms{
     margin-top: 1rem;
 }
 
-/* Admin Tables */
 .roomAddForm, .roomEditForm{
     background: #000000d0;
     display:grid;
@@ -117,7 +213,9 @@ select#optStatus{
 
 p#feedback{
     grid-area: feedback;
-    margin: 0.5rem auto
+    margin: 0.5rem auto;
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 /* ChatDisplay */

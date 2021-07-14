@@ -3,6 +3,7 @@ import EventList from "./EventList"
 import ChatList from "./ChatList"
 import RoomList from './RoomList'
 import { Redirect } from 'react-router'
+import {Button} from "reactstrap"
 
 export default class Admin extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ export default class Admin extends Component {
         if (this.props.location.state) {
             return (
                 <div className="admin-container">
-                    <button onClick={this.logout}>Logout</button>
+                    <Button id="btnLogout" color="danger" onClick={this.logout}>Logout</Button>
                     <EventList />
                     <ChatList />
                     <RoomList />
