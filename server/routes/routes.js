@@ -17,7 +17,6 @@ router.use((req, res, next) => {
 
 router.get("/", (req, res) => {
     res.send("index")
-    console.log("send")
 })
 
 //Get list of socketEvents
