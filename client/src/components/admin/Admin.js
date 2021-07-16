@@ -6,9 +6,7 @@ import { Redirect } from 'react-router'
 import {Button} from "reactstrap"
 
 export default class Admin extends Component {
-    constructor(props) {
-        super(props)
-    }
+
     componentDidMount() {
         document.title = "Admin Dashboard"
     }

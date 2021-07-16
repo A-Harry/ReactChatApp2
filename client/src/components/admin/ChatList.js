@@ -2,6 +2,8 @@ import axios from "axios"
 import React, { Component } from "react"
 import moment from "moment"
 
+const react_api = process.env.REACT_APP_API
+
 const ChatItem = (props) => {
     const { chat } = props
     return (
@@ -26,7 +28,7 @@ export default class ChatList extends Component {
     }
 
     componentDidMount() {
-        axios.get("http://localhost:4000/api/history").then(logs => {
+        axios.get(`${react_api}/api/history`).then(logs => {
             this.setState({
                 chatlog: logs.data
             })

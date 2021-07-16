@@ -2,6 +2,8 @@ import axios from "axios"
 import React, { Component } from 'react'
 import moment from "moment"
 
+const react_api = process.env.REACT_APP_API;
+
 const EventItem = (props) => {
     const event = props.event
     return (
@@ -26,7 +28,7 @@ export default class EventList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/api/eventlog').then(logs => {
+        axios.get(`${react_api}/api/eventlog`).then(logs => {
             this.setState({
                 log: logs.data
             })

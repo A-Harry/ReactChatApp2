@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { Modal, Button } from "reactstrap";
+import { Modal } from "reactstrap";
+
+const react_api = process.env.REACT_APP_API
 
 class RoomEdit extends React.Component {
     constructor(props) {
@@ -27,7 +29,7 @@ class RoomEdit extends React.Component {
         }
         const updateText = document.getElementById("feedback")
         e.preventDefault()
-        axios.post(`http://localhost:4000/api/rooms/${roomID}`, obj).then(res => {
+        axios.post(`${react_api}/api/rooms/${roomID}`, obj).then(res => {
             console.log(res)
             updateText.innerHTML = res.data
             setTimeout(() => {

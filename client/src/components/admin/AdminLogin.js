@@ -1,7 +1,5 @@
 import React from "react";
-import Admin from "./Admin";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import {Container, Input, Button} from "reactstrap";
 
 export default class AdminLogin extends React.Component {
@@ -16,7 +14,7 @@ export default class AdminLogin extends React.Component {
     }
 
     async componentDidMount() {
-        this.admin = await axios.get("http://localhost:4000/api/admin")
+        this.admin = await axios.get(`${process.env.REACT_APP_API}/api/admin`)
         document.title = "Admin login"
     }
 
@@ -54,7 +52,6 @@ export default class AdminLogin extends React.Component {
     }
 
     render() {
-        const { access } = this.state;
         return (
             <div className="admin-login">
                 <Container className="admin-container">

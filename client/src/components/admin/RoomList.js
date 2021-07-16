@@ -4,6 +4,7 @@ import RoomAdd from "./RoomAdd";
 import RoomEdit from "./RoomEdit";
 import moment from "moment";
 
+const react_api = process.env.REACT_APP_API;
 
 const Rooms = (props) => {
     const room = props.room
@@ -44,7 +45,15 @@ export default class RoomList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:4000/api/rooms').then((room) => {
+        axios.get(`${react_api}/api/rooms`).then((room) => {
+            this.setState({
+                rooms: room.data
+            })
+        })
+    }
+
+    componentDidUpdate(){
+        axios.get(`${react_api}/api/rooms`).then((room) => {
             this.setState({
                 rooms: room.data
             })
@@ -64,7 +73,7 @@ export default class RoomList extends Component {
 
     handleEdit = async (id) => {
         var name;
-        await axios.get(`http://localhost:4000/api/rooms/${id}`).then((res)=>{
+        await axios.get(`${react_api}/api/rooms/${id}`).then((res)=>{
             name = res.data
             console.log(res.data)
         });
@@ -81,12 +90,12 @@ export default class RoomList extends Component {
 
     handleDelete = async (id) =>{
         var name;
-        await axios.get(`http://localhost:4000/api/rooms/${id}`).then((res)=>{
+        await axios.get(`${react_api}/api/rooms/${id}`).then((res)=>{
             name = res.data.name
             console.log(res.data)
         })
         if (window.confirm(`Are you sure you want to delete room: ${name}? \n( id: ${id})`)){
-            axios.delete(`http://localhost:4000/api/rooms/delete/${id}`)
+            axios.delete(`${react_api}/api/rooms/delete/${id}`)
         }
     }
 

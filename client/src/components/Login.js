@@ -1,7 +1,5 @@
-import ChatDisplay from "./ChatDisplay";
-import AdminLogin from "./admin/AdminLogin"
 import React from "react"
-import { Link, Redirect } from "react-router-dom";
+import { Link} from "react-router-dom";
 import {Container, Input, Button, Form as form} from "reactstrap"
 // Login Screen -> ChatDisplay
 export class Login extends React.Component {
@@ -53,7 +51,6 @@ export class Login extends React.Component {
     }
 
     render() {
-        const { chatLogin, username, isAdmin } = this.state
         return (
             <div className="chat-login">
                 <Container className="login-container">

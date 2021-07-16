@@ -4,7 +4,9 @@ import Rooms from "./Rooms.js"
 import axios from "axios"
 import { Container, Form, FormGroup, Input, Button } from "reactstrap"
 import "../assets/styles.css"
-// import {participants} from "../../server/controllers/socketController"
+
+const react_api = process.env.REACT_APP_API
+
 export default class ChatDisplay extends React.Component {
     constructor(props) {
         super(props)
@@ -24,7 +26,7 @@ export default class ChatDisplay extends React.Component {
 
     async componentDidMount() {
         // this.socket.join(this.state.room)
-        this.socket = io("localhost:4000");
+        this.socket = io(`${react_api}`);
         console.log(this.socket)
         this.txtInput = document.getElementsByClassName("inputTxt")
         // if ((this.state.username !== this.props.username) && (this.props.username !== "")) {
@@ -46,7 +48,7 @@ export default class ChatDisplay extends React.Component {
             this.onReceivedMessage(msg)
         })
 
-        const roomlist = await axios.get("http://localhost:4000/api/rooms")
+        const roomlist = await axios.get(`${react_api}/api/rooms`)
         console.log(roomlist.data)
         this.setState({
             rooms: [...this.state.rooms.concat(roomlist.data)]

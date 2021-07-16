@@ -2,6 +2,8 @@ import React from "react"
 import axios from "axios"
 import { Modal } from "reactstrap"
 
+const react_api = process.env.REACT_APP_API
+
 class RoomAdd extends React.Component {
     constructor(props) {
         super(props)
@@ -24,7 +26,7 @@ class RoomAdd extends React.Component {
             status: this.state.status
         }
         const feedback = document.getElementById("feedback")
-        axios.post("http://localhost:4000/api/rooms/add", obj).then((res)=>{
+        axios.post(`${react_api}/api/rooms/add`, obj).then((res)=>{
             console.log(res);
             feedback.innerHTML=res.data
             setTimeout(() => {
