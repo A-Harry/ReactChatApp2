@@ -7,7 +7,7 @@ const express = require('express'),
     server = require("http").createServer(app),
     io = require("socket.io")(server, {
         cors: {
-            origin: "http://localhost:3000",
+            origin: "*",
         }
     }),
     { db_url } = require('./config/db.config'),
