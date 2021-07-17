@@ -153,8 +153,13 @@ table.log-data{
 }
 
 table.log-data td{
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem
+    padding: 0.8rem;
+    width: 10%;
+    overflow-wrap: anywhere;
+}
+
+table.log-data td.tblMessage{
+    width:20%;
 }
 
 .tblContainer {
@@ -164,8 +169,7 @@ table.log-data td{
     border-style:solid;
     border-color:purple;
     margin: auto;
-}    
-
+}
 button#btnLogout{
     background-color: #7C212A !important;
     font-weight: 500;

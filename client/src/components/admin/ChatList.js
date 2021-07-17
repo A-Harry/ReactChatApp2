@@ -11,7 +11,7 @@ const ChatItem = (props) => {
             <td>{chat.socket_id}</td>
             <td>{chat.username}</td>
             <td>{chat.room}</td>
-            <td>{chat.message}</td>
+            <td className="tblMessage">{chat.message}</td>
             <td>{moment(chat.createdAt).format("MMMM DD YYYY")}</td>
             <td>{moment(chat.createdAt).format("hh:mm:ss a")}</td>
         </tr>
