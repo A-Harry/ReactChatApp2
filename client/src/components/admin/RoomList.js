@@ -50,14 +50,24 @@ export default class RoomList extends Component {
                 rooms: room.data
             })
         })
-    }
+
+        this.keylistener = document;
+        this.keylistener.addEventListener('keydown', (ev)=>{
+            console.log(ev.key);
+        })
+}
 
     componentDidUpdate(){
-        axios.get(`${react_api}/api/rooms`).then((room) => {
-            this.setState({
-                rooms: room.data
-            })
-        })
+        // setInterval(() =>
+        // axios.get(`${react_api}/api/rooms`).then((room) => {
+        //     this.setState({
+        //         rooms: room.data
+        //     })
+        // })
+        // , 5000);
+        // if(this.keylistener === " "){
+        //     clearInterval()
+        // }
     }
 
 
