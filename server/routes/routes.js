@@ -49,9 +49,9 @@ router.get("/api/history", (req, res) => {
 router.post("/api/history/:roomname", (req, res) => {
     ChatLog.find().where({ room: req.params.roomname })
         .exec((err, docs) => {
-            if (err) {
+            if (err || docs.length == 0) {
                 console.log("could not find docs with given room name")
-                res.json("error finding history for the requested room name")
+                res.json(`error finding history for the requested room name`)
             }
             else {
                 console.log("room history retrieved")
@@ -60,7 +60,7 @@ router.post("/api/history/:roomname", (req, res) => {
         })
 })
 
-//Get list of rooms
+// Get list of rooms
 router.get("/api/rooms", (req, res) => {
     Room.find((err, docs) => {
         if (err) {
@@ -77,15 +77,24 @@ router.get("/api/rooms", (req, res) => {
 //Add Room
 router.post("/api/rooms/add", (req, res) => {
     let chatroom = new Room(req.body)
-    chatroom.save().then(() => {
-        console.log(`new room '${req.body.name}' has been created`)
-        console.log(`The status of ${req.body.name} is ${req.body.status}`)
-        res.status(200).json( `new room "${req.body.name}" added successfully` );
+    Room.findOne({name:req.body.name}).then((data)=>{
+        if(data == null){
+            chatroom.save().then(() => {
+                console.log(`new room '${req.body.name}' has been created`)
+                console.log(`The status of ${req.body.name} is ${req.body.status}`)
+                res.status(200).json( `new room "${req.body.name}" added successfully` );
+            })
+                .catch(err => {
+                    res.status(400).send('Failed saving the new room')
+                    console.log(err)
+                })
+        }
+        else{
+            console.log(data)
+            res.status(400).send("room is already present")
+        }
     })
-        .catch(err => {
-            res.status(400).send('Failed saving the new room')
-            console.log(err)
-        })
+   
 })
 
 //Get room by id

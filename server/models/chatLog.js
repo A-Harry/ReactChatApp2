@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+mongoose.set("strictQuery", "throw")
 const Schema = mongoose.Schema;
 
 let chatLogs = new Schema({

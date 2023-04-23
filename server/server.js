@@ -29,7 +29,7 @@ mongoose.connect(db_url,
 
     // form data will be sent as application/json
     app.use(express.json())
-    app.use(apiRoutes)
+    app.use("/", apiRoutes)
 
 
 // ******* SERVER LISTENING ON PORT **********************
