@@ -2,7 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let room = new Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
     status: {
         type: String,
         enum: ["Active", "Inactive"],

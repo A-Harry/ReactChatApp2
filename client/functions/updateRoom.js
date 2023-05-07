@@ -6,31 +6,31 @@ exports.handler = async function (event, context, callback) {
     body = JSON.parse(event.body)
     console.log(body)
     try {
-        let data = await Room.findById(body.id)
-        if (data == null || data.length == 0) {
-            throw ("error retrieving requested room");
-            // console.log(data);
+        let doc = await Room.findById(body.id)
+        if (doc == null || doc.length == 0) {
+            throw ("error updating requested room: room not found");
+            // console.log(doc);
         }
         else {
             let [name, status] = [body.roomName, body.status];
-
-            console.log(`${data}`)
-            if (data.name == name && data.status == status) {
+            if (doc.name == name && doc.status == status) {
                 return {
                     statusCode: 500,
                     body: JSON.stringify("Room update unchanged")
                 }
             }
-            data.name = name;
-            data.status = status
-            data.save().then(() => {
+            doc.name = name;
+            doc.status = status
+            doc.save().then(() => {
                 console.log("Room has been updated")
-                console.log(data)
+                console.log(doc)
                 // res.send("Room updated")
+            }).catch(rejected => {
+                console.log(rejected)
             })
             return {
                 statusCode: 200,
-                body: JSON.stringify(data)
+                body: JSON.stringify(doc)
             }
         }
     } catch (err) {
@@ -38,7 +38,7 @@ exports.handler = async function (event, context, callback) {
         console.log(err)
         return {
             statusCode: 500,
-            body: JSON.stringify("Room update failed")
+            body: JSON.stringify("Room update failed \n" + err)
         }
     }
 }
