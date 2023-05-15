@@ -9,6 +9,13 @@ module.exports = (io) =>{
         console.log("user connected");
         socket.join(socket.room);
         user.joinRoom(socket.room);
+
+        socket.emit("update_self", 
+            {
+                username: "SERVER",
+                message: `You have joined ${socket.room} as ${socket.username}`,
+                participants: user.participants
+            })
         
 
         //      ---------- New Document for Connection Event -------------
