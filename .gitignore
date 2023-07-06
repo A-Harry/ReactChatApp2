@@ -1,3 +1,6 @@
 node_modules
 .vscode/settings.json
 GPUCache
+server/fly.toml
+server/.dockerignore
+client/.netlify
